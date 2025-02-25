@@ -11,16 +11,24 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "employeeId")
+@EqualsAndHashCode(of = "id")
 public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long employeeId;
+    private Long id;
     private String dni;
     private String name;
     private String address;
     private String type;
     @ManyToOne
-    @JoinColumn(name = "hotels")
+    @JoinColumn(name = "hotel")
     private Hotel hotel;
+
+    public Employee(String dni, String name, String address, String type) {
+        this.dni= dni;
+        this.name = name;
+        this.address = address;
+        this.type = type;
+    }
+
 }

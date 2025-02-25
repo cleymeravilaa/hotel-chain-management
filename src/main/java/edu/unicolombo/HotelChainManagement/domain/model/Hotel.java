@@ -21,7 +21,13 @@ public class Hotel {
     private String address;
     private String phone;
     @OneToOne
-    @JoinColumn(name = "employees")
+    @JoinColumn(name = "director")
     private Employee director;
 
+    public Hotel(String name, int numberStars, String address, String phone) {
+        this.name = name;
+        this.starsNumber = numberStars;
+        this.address = address;
+        this.phone = phone;
+    }
 }

@@ -11,11 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode(of = "customerId")
+@EqualsAndHashCode(of = "id")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long customerId;
+    private Long id;
     private String dni;
     private String name;
     private String address;
