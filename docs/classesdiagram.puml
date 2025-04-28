@@ -1,0 +1,82 @@
+@startuml
+
+' Main Entities'
+class Hotel {
+    - id : long
+    - name : String
+    - category : int
+    - address: String
+    - phone : String
+    - director : Employee
+}
+
+class Employee {
+    - id : long
+    - dni : String
+    - name : String
+    - type : Enum
+    - address : String
+    - hotel: Hotel
+}
+
+class Customer {
+    - id : long
+    - dni : String
+    - name : String
+    - address : String
+    - phone : String
+}
+
+class Room {
+    - roomId : long
+    - hotel : Hotel
+    - String: type
+    - basePrice : Double
+    - status: RoomStatus
+}
+
+class Booking {
+    - id: long
+    - startDate: localDate
+    - endDate: localDate
+    - advanceDeposit: Double
+    + customer: Customer
+    + hotel: Hotel
+}
+
+class BookingStay {
+    - id: long
+    - startDate : localDate
+    - endDate: localDate
+    - booking: Booking
+}
+
+class BookingDetail {
+    - id: long
+    - bookingId : long
+    - roomType: RoomType
+    - numberOfRooms: long
+}
+
+class Invoice {
+    - id : long
+    - bookingStayId : long
+    - issueDate : LocalDate
+    - totalOfRooms : int
+    - finalTotal : Double
+}
+
+
+' Relationships '
+
+Hotel "1" -- "1" Employee: director >
+Hotel "1" -- "*" Employee: employees >
+Hotel "1" -- "*" Room: rooms >
+
+Customer "1" -- "*" Booking : bookings >
+
+Booking "1" -- "1" BookingStay: derives >
+Booking "1" -- "*" Room: rooms >
+Booking "1" -- "1" Invoice: generate >
+Booking "1" -- "*" BookingDetail: details >
+@enduml
