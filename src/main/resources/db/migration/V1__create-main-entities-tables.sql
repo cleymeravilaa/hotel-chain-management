@@ -1,14 +1,14 @@
 CREATE TABLE hotels(
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    hotel_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(200) NOT NULL,
-    stars_number TINYINT NOT NULL,
+    category TINYINT NOT NULL,
     address VARCHAR(300) NOT NULL,
     phone CHAR(10) NOT NULL,
     director BIGINT NOT NULL
 );
 
 CREATE TABLE employees(
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    employee_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     dni VARCHAR(10) NOT NULL,
     name VARCHAR(100) NOT NULL,
     address VARCHAR(300) NOT NULL,
@@ -17,16 +17,16 @@ CREATE TABLE employees(
 );
 
 CREATE TABLE customers(
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    customer_id BIGINT AUTO_INCREMENT PRIMARY KEY,
     dni VARCHAR(10) NOT NULL,
     name VARCHAR(200) NOT NULL,
     address VARCHAR(300) NOT NULL,
     phone CHAR(10) NOT NULL UNIQUE
 );
 
-ALTER TABLE employees ADD CONSTRAINT fk_employee_hotel FOREIGN KEY(hotel) REFERENCES hotels(id) ON DELETE CASCADE;
+ALTER TABLE employees ADD CONSTRAINT fk_employee_hotel FOREIGN KEY(hotel) REFERENCES hotels(hotel_id) ON DELETE CASCADE;
 
-ALTER TABLE hotels ADD CONSTRAINT fk_hotel_employee FOREIGN KEY(director) REFERENCES employees(id) ON DELETE CASCADE;
+ALTER TABLE hotels ADD CONSTRAINT fk_hotel_employee FOREIGN KEY(director) REFERENCES employees(employee_id) ON DELETE CASCADE;
 
 
 
