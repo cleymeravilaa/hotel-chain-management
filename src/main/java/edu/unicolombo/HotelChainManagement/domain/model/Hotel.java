@@ -1,6 +1,7 @@
 package edu.unicolombo.HotelChainManagement.domain.model;
 
 import edu.unicolombo.HotelChainManagement.dto.hotel.RegisterNewHotelDTO;
+import edu.unicolombo.HotelChainManagement.dto.hotel.UpdateHotelDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,5 +39,9 @@ public class Hotel {
         this.category = data.category();
         this.address = data.address();
         this.phone = data.phone();
+    }
+
+    public void updateData(UpdateHotelDTO data) {
+
     }
 }

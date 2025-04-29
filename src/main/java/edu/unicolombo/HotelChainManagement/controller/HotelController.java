@@ -5,14 +5,17 @@ import edu.unicolombo.HotelChainManagement.domain.repository.EmployeeRepository;
 import edu.unicolombo.HotelChainManagement.domain.repository.HotelRepository;
 import edu.unicolombo.HotelChainManagement.dto.hotel.HotelDTO;
 import edu.unicolombo.HotelChainManagement.dto.hotel.RegisterNewHotelDTO;
+import edu.unicolombo.HotelChainManagement.dto.hotel.UpdateHotelDTO;
 import edu.unicolombo.HotelChainManagement.service.EmployeeService;
 import edu.unicolombo.HotelChainManagement.service.HotelService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/hotels")
@@ -34,5 +37,28 @@ public class HotelController {
         employeeRepository.save(director);
         URI url = uriBuilder.path("/hotels/{hotelId}").buildAndExpand(registeredHotel.getHotelId()).toUri();
         return ResponseEntity.created(url).body(new HotelDTO(registeredHotel));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<HotelDTO>> getHotels() {
+        return ResponseEntity.ok(hotelService.getAllHotels());
+    }
+
+    @GetMapping("/{hotelId}")
+    public ResponseEntity<HotelDTO> getHotelById(@PathVariable long hotelId) {
+        return ResponseEntity.ok(hotelService.getHotelById(hotelId));
+    }
+
+    @DeleteMapping("/{hotelId}")
+    @Transactional
+    public ResponseEntity<Void> deleteHotel(@PathVariable long hotelId) {
+        hotelService.deleteById(hotelId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping
+    @Transactional
+    public ResponseEntity<HotelDTO> updateHotel(UpdateHotelDTO data) {
+        return ResponseEntity.ok(hotelService.updateHotel(data));
     }
 }
