@@ -1,5 +1,7 @@
 package edu.unicolombo.HotelChainManagement.domain.model;
 
+import edu.unicolombo.HotelChainManagement.dto.customer.RegisterNewCustomerDTO;
+import edu.unicolombo.HotelChainManagement.dto.customer.UpdateCustomerDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,4 +22,22 @@ public class Customer {
     private String name;
     private String address;
     private String phone;
+
+    public Customer (String dni, String name, String address, String phone) {
+        this.dni = dni;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+    }
+
+    public Customer(RegisterNewCustomerDTO data) {
+        this.dni = data.dni();
+        this.name = data.name();
+        this.address = data.address();
+        this.phone = data.phone();
+    }
+
+    public void updateData(UpdateCustomerDTO data) {
+
+    }
 }

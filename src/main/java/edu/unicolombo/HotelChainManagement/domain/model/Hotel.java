@@ -43,5 +43,24 @@ public class Hotel {
 
     public void updateData(UpdateHotelDTO data) {
 
+        if(data.hotelId() == 0) {
+            this.hotelId = data.hotelId();
+        }
+
+        if(data.name() != null) {
+            this.name = data.name();
+        }
+
+        if(data.category() == 0) {
+            this.category = data.category();
+        }
+
+        if(data.address() != null) {
+            this.address = data.address();
+        }
+
+        if(data.phone() != null) {
+            this.phone = data.phone();
+        }
     }
 }
