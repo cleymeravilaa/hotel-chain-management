@@ -1,0 +1,8 @@
+CREATE TABLE rooms (
+    room_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    hotel_id BIGINT NOT NULL,
+    type VARCHAR(10) NOT NULL,
+    base_price DOUBLE NOT NULL
+)
+
+ALTER TABLE rooms ADD CONSTRAINT fk_room_hotel FOREIGN KEY(hotel) REFERENCES hotels(hotel_id) ON DELETE CASCADE;
