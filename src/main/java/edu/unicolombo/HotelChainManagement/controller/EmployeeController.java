@@ -1,6 +1,5 @@
 package edu.unicolombo.HotelChainManagement.controller;
 
-import edu.unicolombo.HotelChainManagement.domain.model.Employee;
 import edu.unicolombo.HotelChainManagement.dto.employee.EmployeeDTO;
 import edu.unicolombo.HotelChainManagement.dto.employee.RegisterNewEmployeeDTO;
 import edu.unicolombo.HotelChainManagement.dto.employee.UpdateEmployeeDTO;

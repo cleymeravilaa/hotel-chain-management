@@ -19,6 +19,7 @@ public class Room {
     @ManyToOne
     @JoinColumn(name = "hotels")
     private Hotel hotel;
-    private String type;
+    @Enumerated(EnumType.STRING)
+    private RoomType type;
     private Double basePrice;
 }

@@ -1,12 +1,10 @@
 package edu.unicolombo.HotelChainManagement.controller;
 
-import edu.unicolombo.HotelChainManagement.domain.model.Hotel;
 import edu.unicolombo.HotelChainManagement.domain.repository.EmployeeRepository;
 import edu.unicolombo.HotelChainManagement.domain.repository.HotelRepository;
 import edu.unicolombo.HotelChainManagement.dto.hotel.HotelDTO;
 import edu.unicolombo.HotelChainManagement.dto.hotel.RegisterNewHotelDTO;
 import edu.unicolombo.HotelChainManagement.dto.hotel.UpdateHotelDTO;
-import edu.unicolombo.HotelChainManagement.service.EmployeeService;
 import edu.unicolombo.HotelChainManagement.service.HotelService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
