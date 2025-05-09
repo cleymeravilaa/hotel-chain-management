@@ -43,7 +43,17 @@ public class Employee {
     }
 
     public void updateData(UpdateEmployeeDTO data){
+        if (data.name()!=null) {
+            this.name = data.name();
+        }
 
+        if (data.address()!=null) {
+            this.address = data.address(); 
+        }
+
+        if (data.type() != null) {
+            this.type = data.type();
+        }
     }
 
 }

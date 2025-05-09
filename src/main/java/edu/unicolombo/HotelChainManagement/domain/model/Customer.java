@@ -38,6 +38,14 @@ public class Customer {
     }
 
     public void updateData(UpdateCustomerDTO data) {
-
+        if (data.name()!=null) {
+            this.name = data.name();
+        }
+        if (data.phone()!=null) {
+            this.phone = data.phone();
+        }
+        if (data.address()!=null) {
+            this.address = data.address();
+        }
     }
 }
