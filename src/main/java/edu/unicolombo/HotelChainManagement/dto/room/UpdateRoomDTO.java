@@ -1,6 +1,5 @@
 package edu.unicolombo.HotelChainManagement.dto.room;
 
-import edu.unicolombo.HotelChainManagement.domain.model.Room;
 import edu.unicolombo.HotelChainManagement.domain.model.RoomType;
 import edu.unicolombo.HotelChainManagement.domain.model.RoomStatus;
 

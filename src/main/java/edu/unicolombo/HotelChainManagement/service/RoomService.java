@@ -26,6 +26,7 @@ public class RoomService {
         var room = new Room(data);
         var hotel = hotelRepository.getReferenceById(data.hotelId());
         room.setHotel(hotel);
+        hotel.getRooms().add(room);
         return roomRepository.save(room);
     }
 
