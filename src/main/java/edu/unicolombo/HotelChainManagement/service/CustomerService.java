@@ -37,10 +37,9 @@ public class CustomerService {
 
     public void deleteById(long customerId) {customerRepository.deleteById(customerId);}
 
-    public CustomerDTO updateCustomer(UpdateCustomerDTO data) {
-        Customer customer = customerRepository.getReferenceById(data.customerId());
+    public CustomerDTO updateCustomer(long customerId, UpdateCustomerDTO data) {
+        Customer customer = customerRepository.getReferenceById(customerId);
         customer.updateData(data);
-
         return new CustomerDTO(customerRepository.save(customer));
     }
 }
