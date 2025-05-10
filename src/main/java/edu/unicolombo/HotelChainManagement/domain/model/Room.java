@@ -20,15 +20,19 @@ public class Room {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long roomId;
     @ManyToOne
-    @JoinColumn(name = "hotels")
+    @JoinColumn(name = "hotel")
     private Hotel hotel;
     @Enumerated(EnumType.STRING)
     private RoomType type;
     private Double basePrice;
+    @Enumerated(EnumType.STRING)
+    private RoomStatus status;
+
 
     public Room(RegisterNewRoomDTO data) {
         this.type = data.type();
         this.basePrice = data.basePrice();
+        this.status = RoomStatus.FREE;
     }
 
     public void updateData(UpdateRoomDTO data) {

@@ -33,6 +33,8 @@ class Room {
     - String: type
     - basePrice : Double
     - status: RoomStatus
+    - booking: Booking
+    - bookingStay: BookingStay
 }
 
 class Booking {
