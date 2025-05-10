@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import edu.unicolombo.HotelChainManagement.domain.model.Room;
+import edu.unicolombo.HotelChainManagement.domain.repository.HotelRepository;
 import edu.unicolombo.HotelChainManagement.domain.repository.RoomRepository;
 import edu.unicolombo.HotelChainManagement.dto.room.RegisterNewRoomDTO;
 import edu.unicolombo.HotelChainManagement.dto.room.RoomDTO;
@@ -18,8 +19,13 @@ public class RoomService {
     @Autowired
     public RoomRepository roomRepository;
 
+    @Autowired
+    public HotelRepository hotelRepository;
+
     public Room registerRoom(RegisterNewRoomDTO data){
         var room = new Room(data);
+        var hotel = hotelRepository.getReferenceById(data.hotelId());
+        room.setHotel(hotel);
         return roomRepository.save(room);
     }
 
@@ -36,8 +42,8 @@ public class RoomService {
         roomRepository.deleteById(roomId);
     }
 
-    public RoomDTO updateRoom(UpdateRoomDTO data){
-        Room room = roomRepository.getReferenceById(data.roomId());
+    public RoomDTO updateRoom(long roomId, UpdateRoomDTO data){
+        Room room = roomRepository.getReferenceById(roomId);
         room.updateData(data);
         return new RoomDTO(roomRepository.save(room));
     }

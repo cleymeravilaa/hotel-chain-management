@@ -53,9 +53,9 @@ public class RoomController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/{roomId}")
     @Transactional
-    public ResponseEntity<RoomDTO> updateRoom(UpdateRoomDTO data){
-        return ResponseEntity.ok(roomService.updateRoom(data));
+    public ResponseEntity<RoomDTO> updateRoom(@PathVariable long roomId, @RequestBody UpdateRoomDTO data){
+        return ResponseEntity.ok(roomService.updateRoom(roomId, data));
     }
 }

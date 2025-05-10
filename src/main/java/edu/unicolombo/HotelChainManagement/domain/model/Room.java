@@ -18,7 +18,7 @@ public class Room {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long roomId;
+    private Long roomId;
     @ManyToOne
     @JoinColumn(name = "hotel")
     private Hotel hotel;
@@ -42,6 +42,10 @@ public class Room {
 
         if (data.basePrice()!=null) {
             this.basePrice = data.basePrice();
+        }
+
+        if(data.status()!=null){
+            this.status = data.status();
         }
     }
 }
