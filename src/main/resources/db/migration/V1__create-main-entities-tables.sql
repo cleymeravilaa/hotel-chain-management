@@ -4,7 +4,7 @@ CREATE TABLE hotels(
     category TINYINT NOT NULL,
     address VARCHAR(300) NOT NULL,
     phone CHAR(10) NOT NULL,
-    director BIGINT NOT NULL
+    director BIGINT NULL
 );
 
 CREATE TABLE employees(
@@ -13,7 +13,7 @@ CREATE TABLE employees(
     name VARCHAR(100) NOT NULL,
     address VARCHAR(300) NOT NULL,
     type VARCHAR(100) NOT NULL,
-    hotel BIGINT UNIQUE
+    hotel BIGINT NULL
 );
 
 CREATE TABLE customers(
@@ -24,9 +24,9 @@ CREATE TABLE customers(
     phone CHAR(10) NOT NULL UNIQUE
 );
 
-ALTER TABLE employees ADD CONSTRAINT fk_employee_hotel FOREIGN KEY(hotel) REFERENCES hotels(hotel_id) ON DELETE CASCADE;
+ALTER TABLE employees ADD CONSTRAINT fk_employee_hotel FOREIGN KEY(hotel) REFERENCES hotels(hotel_id);
 
-ALTER TABLE hotels ADD CONSTRAINT fk_hotel_employee FOREIGN KEY(director) REFERENCES employees(employee_id) ON DELETE CASCADE;
+ALTER TABLE hotels ADD CONSTRAINT fk_hotel_employee FOREIGN KEY(director) REFERENCES employees(employee_id);
 
 
 
