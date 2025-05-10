@@ -28,8 +28,13 @@ public class EmployeeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<EmployeeDTO>> getEmployees(){
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployees(){
         return ResponseEntity.ok(employeeService.getAllEmployees());
+    }
+
+    @GetMapping("/{hotelId}")
+    public ResponseEntity<List<EmployeeDTO>> getAllEmployeesByHotel(@PathVariable long hotelId){
+        return ResponseEntity.ok(employeeService.getAllEmployeesByHotel(hotelId));
     }
 
     @GetMapping("/{employeeId}")

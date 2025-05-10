@@ -23,6 +23,11 @@ public class EmployeeService {
 
     public Employee registerEmployee(RegisterNewEmployeeDTO data){
         var employee = new Employee(data);
+        if(data.hotelId()!=null){
+            var hotel = hotelRepository.getReferenceById(data.hotelId());
+            hotel.getEmployees().add(employee);
+            employee.setHotel(hotel);
+        }
         return employeeRepository.save(employee);
     }
 
@@ -33,6 +38,11 @@ public class EmployeeService {
     public List<EmployeeDTO> getAllEmployees(){
         return employeeRepository.findAll()
                 .stream().map(EmployeeDTO::new).collect(Collectors.toList());
+    }
+
+    public List<EmployeeDTO> getAllEmployeesByHotel(Long hotelId){
+        var hotel = hotelRepository.getReferenceById(hotelId);
+        return employeeRepository.findByHotel(hotel).stream().map(EmployeeDTO::new).collect(Collectors.toList());
     }
 
     public EmployeeDTO getEmployeeById(long employeeId) {
