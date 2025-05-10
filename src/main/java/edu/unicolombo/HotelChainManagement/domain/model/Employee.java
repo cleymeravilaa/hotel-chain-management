@@ -1,5 +1,6 @@
 package edu.unicolombo.HotelChainManagement.domain.model;
 
+import edu.unicolombo.HotelChainManagement.domain.repository.HotelRepository;
 import edu.unicolombo.HotelChainManagement.dto.employee.RegisterNewEmployeeDTO;
 import edu.unicolombo.HotelChainManagement.dto.employee.UpdateEmployeeDTO;
 import jakarta.persistence.*;

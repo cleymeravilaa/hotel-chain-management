@@ -2,6 +2,7 @@ package edu.unicolombo.HotelChainManagement.service;
 
 import edu.unicolombo.HotelChainManagement.domain.model.Employee;
 import edu.unicolombo.HotelChainManagement.domain.repository.EmployeeRepository;
+import edu.unicolombo.HotelChainManagement.domain.repository.HotelRepository;
 import edu.unicolombo.HotelChainManagement.dto.employee.EmployeeDTO;
 import edu.unicolombo.HotelChainManagement.dto.employee.RegisterNewEmployeeDTO;
 import edu.unicolombo.HotelChainManagement.dto.employee.UpdateEmployeeDTO;
@@ -16,6 +17,9 @@ public class EmployeeService {
 
     @Autowired
     public EmployeeRepository employeeRepository;
+
+    @Autowired
+    public HotelRepository hotelRepository;
 
     public Employee registerEmployee(RegisterNewEmployeeDTO data){
         var employee = new Employee(data);
@@ -41,10 +45,14 @@ public class EmployeeService {
         employeeRepository.deleteById(employeeId);
     }
 
-    public EmployeeDTO updateEmployee(UpdateEmployeeDTO data){
-        Employee  employee = employeeRepository.getReferenceById(data.employeeId());
+    public EmployeeDTO updateEmployee(long employeeId, UpdateEmployeeDTO data){
+        Employee  employee = employeeRepository.getReferenceById(employeeId);
         employee.updateData(data);
-
-        return new EmployeeDTO(employeeRepository.save(employee));
+        if (data.hotelId()!=null) {
+            var hotel = hotelRepository.getReferenceById(data.hotelId());
+            employee.setHotel(hotel);
+        }
+        var employeeSaved = employeeRepository.save(employee);
+        return new EmployeeDTO(employeeSaved);
     }
 }

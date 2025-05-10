@@ -45,9 +45,9 @@ public class EmployeeController {
     }
 
 
-    @PutMapping
+    @PutMapping("/{employeeId}")
     @Transactional
-    public ResponseEntity<EmployeeDTO> updateEmployee(UpdateEmployeeDTO data){
-        return ResponseEntity.ok(employeeService.updateEmployee(data));
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable long employeeId,@RequestBody UpdateEmployeeDTO data){
+        return ResponseEntity.ok(employeeService.updateEmployee(employeeId, data));
     }
 }

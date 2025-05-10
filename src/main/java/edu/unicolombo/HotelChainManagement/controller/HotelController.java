@@ -54,9 +54,9 @@ public class HotelController {
         return ResponseEntity.noContent().build();
     }
 
-    @PutMapping
+    @PutMapping("/{hotelId}")
     @Transactional
-    public ResponseEntity<HotelDTO> updateHotel(UpdateHotelDTO data) {
-        return ResponseEntity.ok(hotelService.updateHotel(data));
+    public ResponseEntity<HotelDTO> updateHotel(@PathVariable Long hotelId, @RequestBody UpdateHotelDTO data) {
+        return ResponseEntity.ok(hotelService.updateHotel(hotelId, data));
     }
 }

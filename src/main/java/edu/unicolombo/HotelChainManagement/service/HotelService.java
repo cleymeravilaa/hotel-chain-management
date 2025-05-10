@@ -48,8 +48,8 @@ public class HotelService {
         hotelRepository.deleteById(hotelId);
     }
 
-    public HotelDTO updateHotel(UpdateHotelDTO data) {
-        Hotel hotel = hotelRepository.getReferenceById(data.hotelId());
+    public HotelDTO updateHotel(Long hotelId, UpdateHotelDTO data) {
+        Hotel hotel = hotelRepository.getReferenceById(hotelId);
         hotel.updateData(data);
 
         return new HotelDTO(hotelRepository.save(hotel));
