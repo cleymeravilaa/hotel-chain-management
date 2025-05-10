@@ -1,5 +1,7 @@
 package edu.unicolombo.HotelChainManagement.domain.model;
 
+import java.util.List;
+
 import edu.unicolombo.HotelChainManagement.dto.hotel.RegisterNewHotelDTO;
 import edu.unicolombo.HotelChainManagement.dto.hotel.UpdateHotelDTO;
 import jakarta.persistence.*;
@@ -22,6 +24,10 @@ public class Hotel {
     private Integer category; // starts
     private String address;
     private String phone;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Employee> employees;
+    @OneToMany(mappedBy = "hotel", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Room> rooms;
     // Relacion 1:1 con empleado (director)
     @OneToOne
     @JoinColumn(name = "director", referencedColumnName = "employeeId")

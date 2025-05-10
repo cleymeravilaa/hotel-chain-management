@@ -1,5 +1,6 @@
 package edu.unicolombo.HotelChainManagement.service;
 
+import edu.unicolombo.HotelChainManagement.domain.model.Employee;
 import edu.unicolombo.HotelChainManagement.domain.model.Hotel;
 import edu.unicolombo.HotelChainManagement.domain.repository.EmployeeRepository;
 import edu.unicolombo.HotelChainManagement.domain.repository.HotelRepository;
@@ -45,7 +46,15 @@ public class HotelService {
     }
 
     public void deleteById(long hotelId) {
-        hotelRepository.deleteById(hotelId);
+        var hotel = hotelRepository.getReferenceById(hotelId);
+        
+        var director = hotel.getDirector();
+        if(director != null){
+            director.setHotel(null);
+            employeeRepository.save(director);
+            hotel.setDirector(null);
+        }
+        hotelRepository.delete(hotel);
     }
 
     public HotelDTO updateHotel(Long hotelId, UpdateHotelDTO data) {
