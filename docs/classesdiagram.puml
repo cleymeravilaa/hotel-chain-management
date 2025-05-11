@@ -8,6 +8,8 @@ class Hotel {
     - address: String
     - phone : String
     - director : Employee
+    - list<Employees> employees: Employee;
+    - list<Room> rooms: Room;
 }
 
 class Employee {
@@ -25,28 +27,31 @@ class Customer {
     - name : String
     - address : String
     - phone : String
+    - list<Staying> stays;
 }
 
 class Room {
     - roomId : long
     - hotel : Hotel
-    - String: type
+    - roomType: RoomType
     - basePrice : Double
     - status: RoomStatus
-    - booking: Booking
-    - bookingStay: BookingStay
+    - list<Staying>: stays;
 }
 
+' Reservas
 class Booking {
     - id: long
     - startDate: localDate
     - endDate: localDate
     - advanceDeposit: Double
-    + customer: Customer
-    + hotel: Hotel
+    - customer: Customer
+    - hotel: Hotel
+    - list<Room> rooms: Room 
 }
 
-class BookingStay {
+' Estancia / Estadia
+class Staying {
     - id: long
     - startDate : localDate
     - endDate: localDate
@@ -56,14 +61,13 @@ class BookingStay {
 class BookingDetail {
     - id: long
     - bookingId : long
-    - roomType: RoomType
-    - numberOfRooms: long
+    - room: Room
 }
 
 class Invoice {
     - id : long
-    - bookingStayId : long
-    - issueDate : LocalDate
+    - Stay: Staying
+    - issueDate : LocalDateTime
     - totalOfRooms : int
     - finalTotal : Double
 }
