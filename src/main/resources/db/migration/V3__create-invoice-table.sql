@@ -1,0 +1,6 @@
+CREATE TABLE invoices(
+    invoice_id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    staying BIGINT NOT NULL,
+    issueDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    final_total FLOAT NOT NULL
+)
