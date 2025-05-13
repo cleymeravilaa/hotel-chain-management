@@ -58,6 +58,7 @@ class Staying {
     - list<StayingRoom> stayingRoom: StayingRoom
 }
 
+' Estadia por habitacion
 class StayingRoom {
     - id: long
     - staying: Staying
