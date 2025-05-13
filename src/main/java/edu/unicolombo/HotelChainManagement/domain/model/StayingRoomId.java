@@ -6,6 +6,6 @@ import jakarta.persistence.Embeddable;
 
 @Embeddable
 public class StayingRoomId implements Serializable {
-    private Long estanciaId;
-    private Long habitacionId;
+    private Long stayingId;
+    private Long roomId;
 }
