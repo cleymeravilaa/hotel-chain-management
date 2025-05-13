@@ -1,5 +1,6 @@
 package edu.unicolombo.HotelChainManagement.domain.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,8 @@ public class Staying {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long stayingId;
 
+    private LocalDate startDate;
+    private LocalDate endDate;
     @OneToMany(mappedBy = "staying", cascade = CascadeType.ALL, orphanRemoval = true)
     List<StayingRoom> stayingRoom = new ArrayList<>();
 }

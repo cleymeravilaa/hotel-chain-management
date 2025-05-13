@@ -1,6 +1,6 @@
 package edu.unicolombo.HotelChainManagement.domain.model;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
@@ -33,7 +33,7 @@ public class StayingRoom {
     private Room room;
 
     // Otros atributos importantes 
-    private LocalDateTime checkInDate;
-    private LocalDateTime checkOutDate;
+    private LocalDate checkInDate;
+    private LocalDate checkOutDate;
     private String notes;
 }
