@@ -55,13 +55,16 @@ class Staying {
     - id: long
     - startDate : localDate
     - endDate: localDate
-    - booking: Booking
+    - list<StayingRoom> stayingRoom: StayingRoom
 }
 
-class BookingDetail {
+class StayingRoom {
     - id: long
-    - bookingId : long
+    - staying: Staying
     - room: Room
+    - checkInDate: LocalDate
+    - checkOutDate: checkOutDate;
+    - notes: String
 }
 
 class Invoice {
