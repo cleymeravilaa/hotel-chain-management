@@ -46,4 +46,15 @@ public class Booking {
         inverseJoinColumns = @JoinColumn(name = "room_id")
     )
     private List<Room> rooms = new ArrayList<>();
+
+    public Booking(Customer customer, Hotel hotel, List<Room> rooms, 
+                    LocalDate startDate, LocalDate endDate, 
+                    Double advanceDeposit){
+        this.customer = customer;
+        this.hotel = hotel;
+        this.rooms = rooms;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.advanceDeposit = advanceDeposit;
+    }
 }
