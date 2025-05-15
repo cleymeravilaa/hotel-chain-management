@@ -21,12 +21,11 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long invoiceId;
-    private Staying stay;
     private LocalDateTime issueDate;
     private int totalOfRooms;
     private Double finalTotal;
-
-    //falta la relación con Staying -------------------------------------------------------
+    @JoinColumn(name = "stay")
+    private Staying stay;
 
     public Invoice(Staying stay, LocalDateTime issueDate, int totalOfRooms, Double finalTotal) {
         this.stay = stay;
