@@ -24,6 +24,7 @@ public class Invoice {
     private LocalDateTime issueDate;
     private int totalOfRooms;
     private Double finalTotal;
+    @OneToOne
     @JoinColumn(name = "stay")
     private Staying stay;
 
