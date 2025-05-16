@@ -42,6 +42,7 @@ public class BookingService {
 
         var advanceDeposit = reserveRoomsAndCalculeAdvanceDeposit(data.startDate(), data.endDate(), rooms);
         var booking = new Booking(customer, hotel, rooms, data.startDate(), data.endDate(), advanceDeposit);
+        roomRepository.saveAll(rooms);
         return new BookingDTO(bookingRepository.save(booking));
     }
 
@@ -101,7 +102,6 @@ public class BookingService {
             room.setStatus(RoomStatus.BOOKED);
             total += bookingDays * room.getBasePrice();
         }
-
         return total * .2;
     }
 }

@@ -33,7 +33,7 @@ CREATE TABLE staying_room (
     staying_id BIGINT NOT NULL,
     room_id BIGINT NOT NULL,
     check_in_date DATE NOT NULL,
-    check_out_date DATE NOT NULL,
+    check_out_date DATE NULL,
     notes TEXT,
     PRIMARY KEY (staying_id, room_id),
     FOREIGN KEY (staying_id) REFERENCES stayings(staying_id) ON DELETE CASCADE,

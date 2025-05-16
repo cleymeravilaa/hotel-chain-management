@@ -22,37 +22,33 @@ public class Invoice {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long invoiceId;
     private LocalDateTime issueDate;
-    private int totalOfRooms;
+    private int totalRooms;
     private Double finalTotal;
     @OneToOne
-    @JoinColumn(name = "stay")
-    private Staying stay;
+    @JoinColumn(name = "staying")
+    private Staying staying;
 
-    public Invoice(Staying stay, LocalDateTime issueDate, int totalOfRooms, Double finalTotal) {
-        this.stay = stay;
+    public Invoice(Staying staying, LocalDateTime issueDate, int totalOfRooms, Double finalTotal) {
+        this.staying = staying;
         this.issueDate = issueDate;
-        this.totalOfRooms = totalOfRooms;
+        this.totalRooms = totalOfRooms;
         this.finalTotal = finalTotal;
     }
 
     public Invoice(RegisterNewInvoiceDTO data) {
-        this.stay = data.stay();
         this.issueDate = data.issueDate();
-        this.totalOfRooms = data.totalOfRooms();
+        this.totalRooms = data.totalOfRooms();
         this.finalTotal = data.finalTotal();
     }
 
     public void updateData(UpdateInvoiceDTO data) {
-        if (data.stay() != null) {
-            this.stay = data.stay();
-        }
 
         if(data.issueDate() != null) {
             this.issueDate = data.issueDate();
         }
 
         if(data.totalOfRooms() != 0) {
-            this.totalOfRooms = data.totalOfRooms();
+            this.totalRooms = data.totalOfRooms();
         }
 
         if (data.finalTotal() != 0) {
