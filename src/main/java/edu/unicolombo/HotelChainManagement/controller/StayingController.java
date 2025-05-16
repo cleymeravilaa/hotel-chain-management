@@ -45,7 +45,7 @@ public class StayingController {
 
     @PutMapping("/{stayingId}")
     public ResponseEntity<StayingDTO> toCheckOut(@PathVariable Long stayingId, @RequestBody UpdateStayingDTO data){
-        return stayingService.toCheckOutRooms(stayingId, data);
+        return ResponseEntity.ok(stayingService.toCheckOutRooms(stayingId, data));
     }
 
 }

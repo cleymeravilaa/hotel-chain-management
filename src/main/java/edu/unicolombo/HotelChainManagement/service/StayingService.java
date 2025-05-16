@@ -3,10 +3,8 @@ package edu.unicolombo.HotelChainManagement.service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import edu.unicolombo.HotelChainManagement.domain.model.Room;
@@ -17,10 +15,10 @@ import edu.unicolombo.HotelChainManagement.domain.model.StayingRoomId;
 import edu.unicolombo.HotelChainManagement.domain.repository.BookingRepository;
 import edu.unicolombo.HotelChainManagement.domain.repository.StayingRepository;
 import edu.unicolombo.HotelChainManagement.domain.repository.StayingRoomRepository;
-import edu.unicolombo.HotelChainManagement.dto.staying.CheckOutRoomDTO;
 import edu.unicolombo.HotelChainManagement.dto.staying.StayingDTO;
 import edu.unicolombo.HotelChainManagement.dto.staying.UpdateStayingDTO;
-import edu.unicolombo.HotelChainManagement.dto.staying.UpdateStayingRoomDTO;
+import edu.unicolombo.HotelChainManagement.dto.staying.CheckOutRoomDTO;
+import edu.unicolombo.HotelChainManagement.domain.model.Staying;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -79,16 +77,26 @@ public class StayingService {
         return new StayingDTO(staying);
     }
 
-    public ResponseEntity<StayingDTO> toCheckOutRooms(Long stayingId, UpdateStayingDTO data) {
+    public StayingDTO toCheckOutRooms(Long stayingId, UpdateStayingDTO data) {
         Staying staying = stayingRepository.getReferenceById(stayingId);
 
         List<StayingRoom> stayingRooms = staying.getStayingRoom();
 
-        for(int i=0; i < stayingRooms.size(); i ++){
-            if (stayingRooms.get(i).getRoom().getRoomId().equals(data.checkOutRoomDTOs().get(i).roomId())) {
-                
+        for(StayingRoom stayingRoom: staying.getStayingRoom()){
+            for(CheckOutRoomDTO checkOutRoom: data.checkOutRoomDTOs()){
+                if(stayingRoom.getRoom().getRoomId()==checkOutRoom.roomId()){
+                    stayingRoom.setCheckOutDate(LocalDate.now());
+                    stayingRoom.setNotes(checkOutRoom.notes());
+                }
             }
         }
+
+        stayingRoomRepository.saveAll(stayingRooms);
+
+        staying.setStayingRoom(stayingRooms);
+
+        return new StayingDTO(stayingRepository.save(staying));
+
     }
 
 }
