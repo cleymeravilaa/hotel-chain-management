@@ -85,8 +85,8 @@ Hotel "1" -- "*" Room: rooms >
 
 Customer "1" -- "*" Booking : bookings >
 
-Booking "1" -- "1" BookingStay: derives >
+Booking "1" -- "1" Staying: derives >
 Booking "1" -- "*" Room: rooms >
-Booking "1" -- "1" Invoice: generate >
-Booking "1" -- "*" BookingDetail: details >
+Staying "1" -- "1" Invoice: generate >
+Staying "1" -- "*" StayingRoom: details >
 @enduml
