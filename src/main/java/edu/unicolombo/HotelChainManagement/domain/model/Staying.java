@@ -36,4 +36,7 @@ public class Staying {
     private Booking booking;
     @OneToMany(mappedBy = "staying", cascade = CascadeType.ALL, orphanRemoval = true)
     List<StayingRoom> stayingRoom = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "invoice_id")
+    private Invoice invoice;
 }

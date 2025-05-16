@@ -1,13 +1,18 @@
 package edu.unicolombo.HotelChainManagement.service;
 
 import edu.unicolombo.HotelChainManagement.domain.model.Invoice;
+import edu.unicolombo.HotelChainManagement.domain.model.Staying;
+import edu.unicolombo.HotelChainManagement.domain.model.StayingRoom;
 import edu.unicolombo.HotelChainManagement.domain.repository.InvoiceRepository;
+import edu.unicolombo.HotelChainManagement.domain.repository.StayingRepository;
 import edu.unicolombo.HotelChainManagement.dto.invoice.InvoiceDTO;
 import edu.unicolombo.HotelChainManagement.dto.invoice.RegisterNewInvoiceDTO;
 import edu.unicolombo.HotelChainManagement.dto.invoice.UpdateInvoiceDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +21,9 @@ public class InvoiceService {
 
     @Autowired
     public InvoiceRepository invoiceRepository;
+
+    @Autowired
+    public StayingRepository stayingRepository;
 
     public Invoice registerInvoice(RegisterNewInvoiceDTO data) {
         var invoice = new Invoice(data);
@@ -38,7 +46,7 @@ public class InvoiceService {
     public void deleteById(long invoiceId) {
         var invoice = invoiceRepository.getReferenceById(invoiceId);
 
-        invoiceRepository.deleteById(invoiceId);
+        invoiceRepository.delete(invoice);
     }
 
     public InvoiceDTO updateInvoice(long invoiceId, UpdateInvoiceDTO data) {
@@ -46,5 +54,28 @@ public class InvoiceService {
         invoice.updateData(data);
 
         return new InvoiceDTO(invoiceRepository.save(invoice));
+    }
+
+    public Invoice generateInvoice(Long stayingId){
+
+        Staying staying = stayingRepository.getReferenceById(stayingId);
+
+        Invoice invoice = new Invoice();
+        invoice.setStaying(staying);
+        invoice.setIssueDate(LocalDateTime.now());
+        invoice.setFinalTotal(calculateFinalTotal(staying.getStayingRoom()));
+        invoice.setTotalRooms(staying.getStayingRoom().size());
+
+        return invoiceRepository.save(invoice);
+
+    }
+
+    public Double calculateFinalTotal(List<StayingRoom> stayingRooms){
+        Double finalTotal = 0.0;
+        for(StayingRoom stayingRoom: stayingRooms){
+            var nights = ChronoUnit.DAYS.between(stayingRoom.getCheckInDate(), stayingRoom.getCheckOutDate());
+            finalTotal += stayingRoom.getRoom().getBasePrice() * nights;
+        }
+        return finalTotal;
     }
 }

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import edu.unicolombo.HotelChainManagement.domain.model.Invoice;
 import edu.unicolombo.HotelChainManagement.domain.model.Room;
 import edu.unicolombo.HotelChainManagement.domain.model.RoomStatus;
 import edu.unicolombo.HotelChainManagement.domain.model.Staying;
@@ -18,7 +19,6 @@ import edu.unicolombo.HotelChainManagement.domain.repository.StayingRoomReposito
 import edu.unicolombo.HotelChainManagement.dto.staying.StayingDTO;
 import edu.unicolombo.HotelChainManagement.dto.staying.UpdateStayingDTO;
 import edu.unicolombo.HotelChainManagement.dto.staying.CheckOutRoomDTO;
-import edu.unicolombo.HotelChainManagement.domain.model.Staying;
 import jakarta.transaction.Transactional;
 
 @Service
@@ -32,6 +32,9 @@ public class StayingService {
 
     @Autowired
     public StayingRoomRepository stayingRoomRepository;
+
+    @Autowired
+    public InvoiceService invoiceService;
 
     @Transactional
     public StayingDTO toCheckIn(Long bookingId) {
@@ -95,7 +98,30 @@ public class StayingService {
 
         staying.setStayingRoom(stayingRooms);
 
+        if(checkOutRoomsComplete(stayingRooms)){
+            Invoice invoice = invoiceService.generateInvoice(stayingId);
+            staying.setInvoice(invoice);
+        }
+
         return new StayingDTO(stayingRepository.save(staying));
+    }
+
+    public StayingDTO updateStaying(Long stayingId, UpdateStayingDTO data) {
+        var staying = stayingRepository.getReferenceById(stayingId);
+        return new StayingDTO(stayingRepository.save(staying));
+
+    }
+
+    public boolean checkOutRoomsComplete(List<StayingRoom> stayingRooms){
+        for(StayingRoom stayingRoom: stayingRooms){
+            if(stayingRoom.getCheckOutDate()==null){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public void deleteStaying(Long stayingId){
 
     }
 
