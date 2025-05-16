@@ -1,5 +1,5 @@
 package edu.unicolombo.HotelChainManagement.dto.staying;
 
-public record UpdateStayingRoom() {
+public record CheckOutRoomDTO(Long roomId, String notes) {
 
 }
