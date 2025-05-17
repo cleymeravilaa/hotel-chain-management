@@ -21,7 +21,7 @@ public class SecurityConfiguration {
     public CorsConfigurationSource corsConfigurationSource(){
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.addAllowedOrigin("http://localhost:8080");
-        configuration.addAllowedOrigin("https://jubilant-space-guide-jjrp5xj599wg3jjgp-5500.app.github.dev/");
+        configuration.addAllowedOrigin("http://127.0.0.1:5501");
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTION", "HEAD", "TRACE", "CONNECT"));
         configuration.setAllowCredentials(true);
         configuration.addAllowedHeader("*");

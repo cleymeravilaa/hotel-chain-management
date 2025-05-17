@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.unicolombo.HotelChainManagement.infrastructure.errors.exception.BusinessLogicValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -83,13 +84,24 @@ public class StayingService {
     public StayingDTO toCheckOutRooms(Long stayingId, UpdateStayingDTO data) {
         Staying staying = stayingRepository.getReferenceById(stayingId);
 
+        if (stayingComplete(staying)){
+            throw new BusinessLogicValidationException("La estadia esta completa no puede actualizar la estadia");
+        }
+
+        for(CheckOutRoomDTO checkOutRoom: data.checkOutRoomDTOs()){
+            if (!stayingRoomRepository.existsByStayingIdAndRoomId(stayingId, checkOutRoom.roomId())){
+                throw new BusinessLogicValidationException("La habitación "+ checkOutRoom.roomId()+ " no pertenece a la estancia "+ stayingId);
+            }
+        }
         List<StayingRoom> stayingRooms = staying.getStayingRoom();
 
         for(StayingRoom stayingRoom: staying.getStayingRoom()){
             for(CheckOutRoomDTO checkOutRoom: data.checkOutRoomDTOs()){
-                if(stayingRoom.getRoom().getRoomId()==checkOutRoom.roomId()){
+                if(stayingRoom.getRoom().getRoomId().equals(checkOutRoom.roomId())){
                     stayingRoom.setCheckOutDate(LocalDate.now());
+                    System.out.println("fecha checkout ahora: "+ LocalDate.now());
                     stayingRoom.setNotes(checkOutRoom.notes());
+                    stayingRoom.getRoom().setStatus(RoomStatus.FREE);
                 }
             }
         }
@@ -121,6 +133,9 @@ public class StayingService {
         return true;
     }
 
+    public boolean stayingComplete(Staying staying){
+        return staying.getInvoice()!=null;
+    }
     public void deleteStaying(Long stayingId){
 
     }

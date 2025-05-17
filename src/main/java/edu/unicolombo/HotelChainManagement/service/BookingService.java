@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 
+import edu.unicolombo.HotelChainManagement.infrastructure.errors.exception.BusinessLogicValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,10 +36,16 @@ public class BookingService {
     public HotelRepository hotelRepository;
 
     @Transactional
-    public BookingDTO registerBooking(RegisterBookingDTO data){
+    public BookingDTO registerBooking(RegisterBookingDTO data) throws BusinessLogicValidationException{
         var customer = customerRepository.getReferenceById(data.customerId());
         var hotel = hotelRepository.getReferenceById(data.hotelId());
         var rooms = roomRepository.findByHotel_hotelIdAndRoomIdIn(hotel.getHotelId(), data.roomIds());
+
+        for(Room room: rooms){
+            if (room.getStatus().equals(RoomStatus.BOOKED) || room.getStatus().equals(RoomStatus.OCCUPIED)){
+                throw new BusinessLogicValidationException("No se puede reservar esta habitación por que no se encuentra disponible");
+            }
+        }
 
         var advanceDeposit = reserveRoomsAndCalculeAdvanceDeposit(data.startDate(), data.endDate(), rooms);
         var booking = new Booking(customer, hotel, rooms, data.startDate(), data.endDate(), advanceDeposit);

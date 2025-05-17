@@ -3,6 +3,7 @@ package edu.unicolombo.HotelChainManagement.controller;
 import java.net.URI;
 import java.util.List;
 
+import edu.unicolombo.HotelChainManagement.infrastructure.errors.exception.BusinessLogicValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -29,7 +30,7 @@ public class BookingController {
     public BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<BookingDTO> registerBooking(@RequestBody RegisterBookingDTO data, UriComponentsBuilder uriBuilder){
+    public ResponseEntity<BookingDTO> registerBooking(@RequestBody RegisterBookingDTO data, UriComponentsBuilder uriBuilder) throws BusinessLogicValidationException {
         var registeredBooking = bookingService.registerBooking(data);
         URI url = uriBuilder.path("/bookings/{bookingId}").buildAndExpand(registeredBooking.bookingId()).toUri();
         return ResponseEntity.created(url).body(registeredBooking);
