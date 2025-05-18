@@ -46,7 +46,10 @@ public class StayingService {
     // Cola para optimización de CheckOut masivos y su procesamiento
     private final Queue<CheckOutTask> checkOutQueue = new ConcurrentLinkedQueue<>(); // FIFO
 
-    private final Stack<StayingRoomSnapshot> undoCheckOutStack = new Stack<>(); // LIFO
+    // Pila para deshacer checkouts realizando instantaneas
+    private final Stack<StayingRoomSnapshot> undoCheckOutStack = new Stack<>();// LIFO
+
+
     // Metodo para encolar checkOuts
     @Transactional
     public void enqueueCheckOut(Long stayingId, UpdateStayingDTO data){
@@ -78,7 +81,6 @@ public class StayingService {
         for(CheckOutRoomDTO dto: data.checkOutRoomDTOs()){
             StayingRoomId id = new StayingRoomId(stayingId, dto.roomId());
             StayingRoom room = stayingRoomRepository.findById(id).orElseThrow();
-
             undoCheckOutStack.push(new StayingRoomSnapshot(
                     id,
                     room.getCheckOutDate(),
@@ -89,7 +91,7 @@ public class StayingService {
 
     public void undoLastCheckOut(){
         if (undoCheckOutStack.isEmpty()){
-            throw new IllegalStateException("No hay operaciones a deshacer");
+            throw new BusinessLogicValidationException("No hay operaciones a deshacer");
         }
         if (!undoCheckOutStack.isEmpty()){
             StayingRoomSnapshot snapshot = undoCheckOutStack.pop();
