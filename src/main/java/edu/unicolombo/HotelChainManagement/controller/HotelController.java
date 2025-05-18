@@ -30,9 +30,6 @@ public class HotelController {
     @PostMapping
     public ResponseEntity<HotelDTO> registerHotel(@RequestBody RegisterNewHotelDTO data, UriComponentsBuilder uriBuilder){
         var registeredHotel = hotelService.register(data);
-        var director =  employeeRepository.getReferenceById(data.directorId());
-        director.setHotel(registeredHotel);
-        employeeRepository.save(director);
         URI url = uriBuilder.path("/hotels/{hotelId}").buildAndExpand(registeredHotel.getHotelId()).toUri();
         return ResponseEntity.created(url).body(new HotelDTO(registeredHotel));
     }

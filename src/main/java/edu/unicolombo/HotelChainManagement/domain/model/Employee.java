@@ -23,10 +23,13 @@ public class Employee {
     private String address;
     @Enumerated(EnumType.STRING)
     private EmployeeType type;
-    // Relacion N:1 con hotel
-    @ManyToOne(fetch = FetchType.LAZY)
+    // Relacion ManyToOne cn Hotel (para empleados normales)
+    @ManyToOne
     @JoinColumn(name = "hotel")
     private Hotel hotel;
+
+    @OneToOne(mappedBy = "director")
+    private Hotel managedHotel;
 
     public Employee(String dni, String name, String address, EmployeeType type) {
         this.dni= dni;

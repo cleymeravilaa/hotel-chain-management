@@ -32,7 +32,7 @@ public class EmployeeController {
         return ResponseEntity.ok(employeeService.getAllEmployees());
     }
 
-    @GetMapping("/{hotelId}")
+    @GetMapping("/hotel/{hotelId}")
     public ResponseEntity<List<EmployeeDTO>> getAllEmployeesByHotel(@PathVariable long hotelId){
         return ResponseEntity.ok(employeeService.getAllEmployeesByHotel(hotelId));
     }

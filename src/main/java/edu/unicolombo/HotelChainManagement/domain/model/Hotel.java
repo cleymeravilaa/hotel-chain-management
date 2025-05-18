@@ -30,7 +30,7 @@ public class Hotel {
     private List<Room> rooms;
     // Relacion 1:1 con empleado (director)
     @OneToOne
-    @JoinColumn(name = "director", referencedColumnName = "employeeId")
+    @JoinColumn(name = "director")
     private Employee director;
 
     public Hotel(String name, int category, String address, String phone) {
