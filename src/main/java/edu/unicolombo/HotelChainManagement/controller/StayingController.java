@@ -25,7 +25,7 @@ public class StayingController {
     @Autowired
     public StayingService stayingService;
 
-    @PostMapping("/{bookingId}")
+    @PostMapping("/check-in/{bookingId}")
     public ResponseEntity<StayingDTO> toCheckIn(@PathVariable Long bookingId, UriComponentsBuilder uriBuilder){
         var registeredStaying = stayingService.toCheckIn(bookingId);
         URI url = uriBuilder.path("/stayings/{stayingId}").buildAndExpand(registeredStaying.stayingId()).toUri();
@@ -43,9 +43,16 @@ public class StayingController {
         return ResponseEntity.ok(staying);
     }
 
-    @PutMapping("/{stayingId}")
-    public ResponseEntity<StayingDTO> toCheckOut(@PathVariable Long stayingId, @RequestBody UpdateStayingDTO data){
-        return ResponseEntity.ok(stayingService.toCheckOutRooms(stayingId, data));
+    @PutMapping("/check-out/{stayingId}")
+    public ResponseEntity<String> enqueueCheckOut(@PathVariable Long stayingId, @RequestBody UpdateStayingDTO data){
+        stayingService.enqueueCheckOut(stayingId, data);
+        return ResponseEntity.accepted().body("Check-out en cola para procesamiento");
+    }
+
+    @PostMapping("/check-out/undo")
+    public ResponseEntity<String> undoLastCheckOut(){
+        stayingService.undoLastCheckOut();
+        return ResponseEntity.ok("Ultimo check-out revertido");
     }
 
 }
