@@ -28,9 +28,6 @@ public class Employee {
     @JoinColumn(name = "hotel")
     private Hotel hotel;
 
-    @OneToOne(mappedBy = "director")
-    private Hotel managedHotel;
-
     public Employee(String dni, String name, String address, EmployeeType type) {
         this.dni= dni;
         this.name = name;

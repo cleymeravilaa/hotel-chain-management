@@ -5,11 +5,16 @@ import edu.unicolombo.HotelChainManagement.domain.model.EmployeeType;
 import edu.unicolombo.HotelChainManagement.domain.model.RoomType;
 
 public record EmployeeDTO(long employeeId, String dni, String name,
-                          String address, EmployeeType type) {
+                          String address, EmployeeType type, Long hotelId) {
 
     public EmployeeDTO(Employee employee){
-        this(employee.getEmployeeId(), employee.getDni(),
-                employee.getName(), employee.getAddress(),
-                employee.getType());
+        this(
+                employee.getEmployeeId(),
+                employee.getDni(),
+                employee.getName(),
+                employee.getAddress(),
+                employee.getType(),
+                employee.getHotel()!=null ? employee.getHotel().getHotelId() : null
+        );
     }
 }

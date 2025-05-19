@@ -23,8 +23,8 @@ public class EmployeeController {
     @PostMapping
     public ResponseEntity<EmployeeDTO> registerEmployee(@RequestBody RegisterNewEmployeeDTO data, UriComponentsBuilder uriBuilder){
         var registeredEmployee = employeeService.registerEmployee(data);
-        URI url = uriBuilder.path("/employees/{employeeId}").buildAndExpand(registeredEmployee.getEmployeeId()).toUri();
-        return ResponseEntity.created(url).body(new EmployeeDTO(registeredEmployee));
+        URI url = uriBuilder.path("/employees/{employeeId}").buildAndExpand(registeredEmployee.employeeId()).toUri();
+        return ResponseEntity.created(url).body(registeredEmployee);
     }
 
     @GetMapping

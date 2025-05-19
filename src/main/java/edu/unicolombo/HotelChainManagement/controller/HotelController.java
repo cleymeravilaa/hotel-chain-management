@@ -30,8 +30,8 @@ public class HotelController {
     @PostMapping
     public ResponseEntity<HotelDTO> registerHotel(@RequestBody RegisterNewHotelDTO data, UriComponentsBuilder uriBuilder){
         var registeredHotel = hotelService.register(data);
-        URI url = uriBuilder.path("/hotels/{hotelId}").buildAndExpand(registeredHotel.getHotelId()).toUri();
-        return ResponseEntity.created(url).body(new HotelDTO(registeredHotel));
+        URI url = uriBuilder.path("/hotels/{hotelId}").buildAndExpand(registeredHotel.hotelId()).toUri();
+        return ResponseEntity.created(url).body(registeredHotel);
     }
 
     @GetMapping

@@ -24,6 +24,7 @@ public class RoomService {
 
     public Room registerRoom(RegisterNewRoomDTO data){
         var room = new Room(data);
+        System.out.println("precio base: "+ data.basePrice());
         var hotel = hotelRepository.getReferenceById(data.hotelId());
         room.setHotel(hotel);
         hotel.getRooms().add(room);
